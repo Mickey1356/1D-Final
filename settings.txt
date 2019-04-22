@@ -1,0 +1,8 @@
+url,https://edward-s-dream-came-true.firebaseio.com/
+apikey,AIzaSyCnOgcEyaUvcPMwZ6sAtD8r0ujh2zBJ6FA
+base_dir,./yolo-coco/
+min_confidence,0.5
+min_threshold,0.3
+rotation,90
+rm_no,5904
+debug,False
