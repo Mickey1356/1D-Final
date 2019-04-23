@@ -161,9 +161,9 @@ while True:
 
 	# catch network errors while writing to the database
 	try:
-		db.child(rm_no + "ppl_cnt").child("ppl_cnt_{}".format(time.strftime("%d%m%y %H:%M"))).set(people_cnt)
+		db.child(rm_no + "ppl_cnt").child("ppl_cnt_{}".format(time.strftime("%d/%m/%Y %H:%M"))).set(people_cnt)
 		db.child(rm_no + "no_of_people").child("ppl_cnt").set(people_cnt)
-		db.child(rm_no + "no_of_people").child("last_time").set(time.strftime("%d%m%y %H:%M"))
+		db.child(rm_no + "no_of_people").child("last_time").set(time.strftime("%d/%m/%Y %H:%M"))
 		db.child(rm_no + 'take_pic').set("False")
 	except:
 		print("[ERROR] Could not write to database.")
@@ -171,6 +171,6 @@ while True:
 
 	# save the image for debugging purposes
 	if debug_img:
-		cv2.imwrite("./debug/debug_image_{}_{}.jpg".format(rm_no, time.strftime("%d%m%y_%H:%M")), image)
+		cv2.imwrite("./debug/debug_image_{}_{}.jpg".format(rm_no, time.strftime("%d/%m/%Y_%H:%M")), image)
 
 print("[INFO] An error occurred and the program has stopped.")

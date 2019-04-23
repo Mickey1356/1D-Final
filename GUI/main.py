@@ -11,7 +11,7 @@ from kivy.uix.scrollview import ScrollView
 
 import webbrowser
 
-from libdw import pyrebase
+import pyrebase
 
 from functools import partial
 
@@ -31,18 +31,16 @@ kv = Builder.load_file("login_menu.kv")
 class WindowManager(ScreenManager):
     pass
 
-
 roomNo = "55-0-0"
 class LoginWindow(Screen):
     def check(self):
-        f = open("Registered.txt", "r").readlines() [1:]
+        f = open("registered.txt", "r").readlines() [1:]
         database = []
         for l in f:
             k,v = l.split()
             database.append((k,v))
         global roomNo
         roomNo = str(self.roomno.text)
-                
         if (self.studentid.text, self.roomno.text) in database:
             self.reset()
             sm.current = 'terms'
@@ -52,18 +50,18 @@ class LoginWindow(Screen):
     def reset(self):
         self.studentid.text = ''
         self.roomno.text = ''
-    
+
+    def quit(self):
+        App.get_running_app().stop()
+
 
 def invalidLogin():
     pop = Popup (title='Invalid', content=Label(text= 'Wrong ID or Room Number'), size_hint = (None,None), size= (400,400) )
     pop.open()
     
-
-###
 class TermsWindow(Screen):
     pass
 
-###
 class MainWindow(Screen):
     def checkRms(self):
         global roomNo
@@ -78,7 +76,9 @@ class MainWindow(Screen):
         elif block == '59':
             sm.current = 'Blk59'
 
-###
+    def external(instance):
+        webbrowser.open('hms.sutd.edu.sg')
+
 class HousingRules(Screen):
     pass
 
@@ -143,6 +143,27 @@ class Blk59(Screen):
             last_time = db.child(rm + 'no_of_people').child('last_time').get().val()
             self.rmDict[rm].text = "Last detected {} people at {}.".format(ppl_cnt, last_time)
 
+    def refresh(self):
+        try:
+            b5904_p = db.child('5904no_of_people').child("ppl_cnt").get().val()
+            b5904_t = db.child('5904no_of_people').child("last_time").get().val()
+
+            b5906_p = db.child('5906no_of_people').child("ppl_cnt").get().val()
+            b5906_t = db.child('5906no_of_people').child("last_time").get().val()
+
+            b5910_p = db.child('5910no_of_people').child("ppl_cnt").get().val()
+            b5910_t = db.child('5910no_of_people').child("last_time").get().val()
+        except Exception as e:
+            print("[ERROR] " + str(e))
+            b5904_p = b5904_t = 0
+            b5906_p = b5906_t = 0
+            b5910_p = b5910_t = 0
+
+        self.b5904.text = "Last detected {} people at {}.".format(b5904_p, b5904_t)
+        self.b5906.text = "Last detected {} people at {}.".format(b5906_p, b5906_t)
+        self.b5910.text = "Last detected {} people at {}.".format(b5910_p, b5910_t)
+
+
 
 class Blk57(Screen):
     def __init__(self, **kwargs):
@@ -203,6 +224,23 @@ class Blk57(Screen):
             ppl_cnt = db.child(rm + 'no_of_people').child('ppl_cnt').get().val()
             last_time = db.child(rm + 'no_of_people').child('last_time').get().val()
             self.rmDict[rm].text = "Last detected {} people at {}.".format(ppl_cnt, last_time)
+
+    def refresh(self):
+        try:
+            b5704 = db.child('5704no_of_people').child("ppl_cnt").get().val()
+            b5704_t = db.child('5704no_of_people').child("last_time").get().val()
+
+            b5706_p = db.child('5706no_of_people').child("ppl_cnt").get().val()
+            b5706_t = db.child('5706no_of_people').child("last_time").get().val()
+
+            b5710_p = db.child('5710no_of_people').child("ppl_cnt").get().val()
+            b5710_t = db.child('5710no_of_people').child("last_time").get().val()
+        except Exception as e:
+            print("[ERROR] " + str(e))
+            b5704 = b5704_t = 0
+            b5706_p = b5706_t = 0
+            b5710_p = b5710_t = 0
+
 
 
 class Blk55(Screen):
@@ -265,13 +303,30 @@ class Blk55(Screen):
             last_time = db.child(rm + 'no_of_people').child('last_time').get().val()
             self.rmDict[rm].text = "Last detected {} people at {}.".format(ppl_cnt, last_time)
 
-class BookRoom(Screen):
-    def external(instance):
-        webbrowser.open('hms.sutd.edu.sg')
+    def refresh(self):
+        try:
+            b5504_p = db.child('5504no_of_people').child("ppl_cnt").get().val()
+            b5504_t = db.child('5504no_of_people').child("last_time").get().val()
+
+            b5506_p = db.child('5506no_of_people').child("ppl_cnt").get().val()
+            b5506_t = db.child('5506no_of_people').child("last_time").get().val()
+
+            b5510_p = db.child('5510no_of_people').child("ppl_cnt").get().val()
+            b5510_t = db.child('5510no_of_people').child("last_time").get().val()
+        except Exception as e:
+            print("[ERROR] " + str(e))
+            b5504_p = b5504_t = 0
+            b5506_p = b5506_t = 0
+            b5510_p = b5510_t = 0
+
+        self.b5504.text = "Last detected {} people at {}.".format(b5504_p, b5504_t)
+        self.b5506.text = "Last detected {} people at {}.".format(b5506_p, b5506_t)
+        self.b5510.text = "Last detected {} people at {}.".format(b5510_p, b5510_t)
+
 
 sm = WindowManager()
 
-screens = [LoginWindow(name = 'login'), TermsWindow(name='terms'), MainWindow(name = 'main'), HousingRules(name = 'rules'), Blk59 (name = 'Blk59'), Blk57(name = 'Blk57'), Blk55(name = 'Blk55'), BookRoom(name = 'book')]
+screens = [LoginWindow(name = 'login'), TermsWindow(name='terms'), MainWindow(name = 'main'), HousingRules(name = 'rules'), Blk59 (name = 'Blk59'), Blk57(name = 'Blk57'), Blk55(name = 'Blk55')]
 for screen in screens:
     sm.add_widget(screen)
 
