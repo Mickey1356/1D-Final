@@ -1,5 +1,5 @@
 RASPBERRY PI CAMERA SETUP
-1) Download and unzip RASPI_CAM.zip into a Raspberry Pi
+1) Place the folder RASPI_CAM into a Raspberry Pi
 2) Ensure that the Pi is connected to a camera
 3) Install the required packages using "pip install -r camera_req.txt"
 4) Edit settings.txt. More information as provided:
@@ -14,7 +14,7 @@ RASPBERRY PI CAMERA SETUP
 5) Run the python file using "python3 camera.py"
 
 RASPBERRY PI MOTION SENSOR SETUP
-1) Download and unzip RASPI_MOTION.zip into a Raspberry Pi
+1) Place the folder RASPI_MOTION into a Raspberry Pi
 2) Ensure that the Pi is connected to a motion sensor.
 3) Install the required packages using "pip install -r motion_req.txt"
 4) Edit settings.txt. More information as provided:
@@ -26,7 +26,7 @@ RASPBERRY PI MOTION SENSOR SETUP
 5) Run the python file using "python3 motion_sensor.py
 
 GUI SETUP
-1) Download and unzip GUI.zip into a folder
+1) Open the GUI folder
 2) Install the required packages using "pip install -r gui_req.txt"
 3) Edit settings.txt. More information as provided:
 	url should be a valid firebase url
