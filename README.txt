@@ -1,4 +1,4 @@
-RASPBERRY PI SETUP
+RASPBERRY PI CAMERA SETUP
 1) Download and unzip RASPI.zip into a Raspberry Pi
 2) Ensure that the Pi is connected to a camera
 3) Install the required packages using "pip install -r raspi_req.txt"
@@ -11,7 +11,7 @@ RASPBERRY PI SETUP
 	rotation is the rotation adjustment for the Raspberry Pi camera
 	rm_no is the room number is <block><floor> format
 	debug is True if you want to save analysed images for debugging purposes (default False)
-5) Run the python file using "python3 final.py"
+5) Run the python file using "python3 camera.py"
 
 GUI SETUP
 1) Download and unzip GUI.zip into a folder

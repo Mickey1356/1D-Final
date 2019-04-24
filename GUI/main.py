@@ -11,7 +11,7 @@ from kivy.uix.scrollview import ScrollView
 
 import webbrowser
 
-import pyrebase
+from libdw import pyrebase
 
 from functools import partial
 
@@ -28,11 +28,13 @@ db = firebase.database()
 
 kv = Builder.load_file("login_menu.kv")
 
+
 class WindowManager(ScreenManager):
     pass
 
 roomNo = "55-0-0"
 class LoginWindow(Screen):
+    # checks whether the provided username and password are correct
     def check(self):
         f = open("registered.txt", "r").readlines() [1:]
         database = []
@@ -63,6 +65,8 @@ class TermsWindow(Screen):
     pass
 
 class MainWindow(Screen):
+
+    # moves the user to the appropriate screen for his/her block
     def checkRms(self):
         global roomNo
         
@@ -84,6 +88,7 @@ class HousingRules(Screen):
 
 
 class Blk59(Screen):
+    # reads the last recorded data from the database and displays it
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         try:
@@ -115,6 +120,7 @@ class Blk59(Screen):
         self.eventDict["5906"] = None
         self.eventDict["5910"] = None
 
+    # sends a request to the database to take a pic and perform the object recognition
     def checkRm(self, rm):
         try:
             db.child(rm + 'take_pic').set("True")
@@ -134,6 +140,7 @@ class Blk59(Screen):
         else:
             self.checkRm(rm)
 
+    # continuously checks the database for when analysing is done and updates text accordingly
     def updateText(self, rm, *largs):
         running = db.child(rm + 'take_pic').get().val()
         if running == "False":
@@ -143,6 +150,7 @@ class Blk59(Screen):
             last_time = db.child(rm + 'no_of_people').child('last_time').get().val()
             self.rmDict[rm].text = "Last detected {} people at {}.".format(ppl_cnt, last_time)
 
+    # gets the latest data from the database and updates the text
     def refresh(self):
         try:
             b5904_p = db.child('5904no_of_people').child("ppl_cnt").get().val()

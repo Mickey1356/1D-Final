@@ -20,7 +20,7 @@ except:
 	exit()
 
 for l in s:
-	sd = {k:v for k,v in l.rstrip().split(',')}
+	sd = {k:v for k,v in l.rstrip().split(',') if l != ''}
 
 try:
 	config = {
