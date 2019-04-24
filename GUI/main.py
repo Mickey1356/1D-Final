@@ -27,7 +27,7 @@ except:
 # intialise a settings dictionary
 sd = {}
 for l in s:
-    if l!='':
+    if l.rstrip() != '':
         k,v = l.rstrip().split(',')
         sd[k] = v
 

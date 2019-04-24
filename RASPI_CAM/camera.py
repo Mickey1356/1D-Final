@@ -22,7 +22,7 @@ except:
 # intialise a settings dictionary
 sd = {}
 for l in s:
-	if l!='':
+	if l.rstrip() != '':
 		k,v = l.rstrip().split(',')
 		sd[k] = v
 
@@ -183,6 +183,6 @@ while True:
 
 	# save the image for debugging purposes
 	if debug_img:
-		cv2.imwrite("./debug/debug_image_{}_{}.jpg".format(rm_no, time.strftime("%d/%m/%Y_%H:%M")), image)
+		cv2.imwrite("./debug/debug_image_{}_{}.jpg".format(rm_no, time.strftime("%d_%m_%Y_%H%M")), image)
 
 print("[INFO] An error occurred and the program has stopped.")
