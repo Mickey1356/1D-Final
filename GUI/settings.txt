@@ -1,2 +1,2 @@
-url,https://edward-s-dream-came-true.firebaseio.com/
-apikey,AIzaSyCnOgcEyaUvcPMwZ6sAtD8r0ujh2zBJ6FA
+url,# insert url here
+apikey,# insert apikey here
