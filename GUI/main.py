@@ -15,16 +15,37 @@ from libdw import pyrebase
 
 from functools import partial
 
-# initialise the firebase connection
-url = "https://edward-s-dream-came-true.firebaseio.com/"
-apikey = "AIzaSyCnOgcEyaUvcPMwZ6sAtD8r0ujh2zBJ6FA"
+# load settings file
+try:
+    with open('settings.txt') as f:
+        s = f.readlines()
+except:
+    print("[ERROR] Settings file not found.")
+    print("[INFO] An error occurred and the program has stopped.")
+    exit()
 
-config = {
-    "apiKey": apikey,
-    "databaseURL": url,
-}
-firebase = pyrebase.initialize_app(config)
-db = firebase.database()
+# intialise a settings dictionary
+sd = {}
+for l in s:
+    if l!='':
+        k,v = l.rstrip().split(',')
+        sd[k] = v
+
+
+# initialise the firebase connection
+try:
+    config = {
+        "apiKey": sd["apikey"],
+        "databaseURL": sd["url"],
+    }
+
+    firebase = pyrebase.initialize_app(config)
+    db = firebase.database()
+except:
+    print("[ERROR] Unable to connect to database.")
+    print("[INFO] An error occurred and the program has stopped.")
+    exit()
+
 
 kv = Builder.load_file("login_menu.kv")
 
@@ -32,6 +53,7 @@ kv = Builder.load_file("login_menu.kv")
 class WindowManager(ScreenManager):
     pass
 
+# set a default room number to prevent errors
 roomNo = "55-0-0"
 class LoginWindow(Screen):
     # checks whether the provided username and password are correct

@@ -19,13 +19,17 @@ except:
 	print("[INFO] An error occurred and the program has stopped.")
 	exit()
 
+# intialise a settings dictionary
+sd = {}
 for l in s:
-	sd = {k:v for k,v in l.rstrip().split(',') if l != ''}
+	if l!='':
+		k,v = l.rstrip().split(',')
+		sd[k] = v
 
 try:
 	config = {
-	    "apiKey": sd["apikey"],
-	    "databaseURL": sd["url"],
+		"apiKey": sd["apikey"],
+		"databaseURL": sd["url"],
 	}
 
 	# image recognition variables
@@ -39,10 +43,18 @@ try:
 	debug_img = sd["debug"] == "True"
 except:
 	print("[ERROR] Invalid settings file. See README.txt for an example settings file.")
+	print("[INFO] An error occurred and the program has stopped.")
+	exit()
 
 # load database
-firebase = pyrebase.initialize_app(config)
-db = firebase.database()
+try:
+	firebase = pyrebase.initialize_app(config)
+	db = firebase.database()
+except:
+	print("[ERROR] Unable to connect to database.")
+	print("[INFO] An error occurred and the program has stopped.")
+	exit()
+
 
 # find the necessary YOLO files
 try:
